@@ -1,4 +1,4 @@
-package com.innowise.authservice.exeption;
+package com.innowise.authservice.exception;
 
 import com.innowise.authservice.entity.dto.ErrorResponseDto;
 import io.jsonwebtoken.ExpiredJwtException;

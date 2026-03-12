@@ -10,10 +10,10 @@ import com.innowise.authservice.entity.dto.TokenResponse;
 import com.innowise.authservice.entity.dto.TokenValidationResponse;
 import com.innowise.authservice.entity.dto.UserCreateRequest;
 import com.innowise.authservice.entity.dto.UserResponseDto;
-import com.innowise.authservice.exeption.InvalidCredentialsException;
-import com.innowise.authservice.exeption.RegistrationOrchestrationException;
-import com.innowise.authservice.exeption.UserInactiveException;
-import com.innowise.authservice.exeption.UserNotFoundException;
+import com.innowise.authservice.exception.InvalidCredentialsException;
+import com.innowise.authservice.exception.RegistrationOrchestrationException;
+import com.innowise.authservice.exception.UserInactiveException;
+import com.innowise.authservice.exception.UserNotFoundException;
 import com.innowise.authservice.repository.UserCredentialRepository;
 import com.innowise.authservice.security.JwtService;
 import com.innowise.authservice.service.AuthService;
@@ -51,14 +51,18 @@ public class AuthServiceImpl implements AuthService {
                 request.birthDate()
         ));
 
-        String hash = encoder.encode(request.password());
-        UserCredential credential = new UserCredential();
-        credential.setLogin(request.login());
-        credential.setUserId(createdUser.id());
-        credential.setPasswordHash(hash);
-        credential.setRole(Role.USER);
 
+        // Credentials depend on the userId returned by User Service,
+        // so any failure after user creation must trigger compensating rollback.
         try {
+            String hash = encoder.encode(request.password());
+
+            UserCredential credential = new UserCredential();
+            credential.setLogin(request.login());
+            credential.setUserId(createdUser.id());
+            credential.setPasswordHash(hash);
+            credential.setRole(Role.USER);
+
             UserCredential savedCredential = repository.save(credential);
             return new TokenResponse(
                     jwtService.generateAccessToken(savedCredential),

@@ -1,4 +1,4 @@
-package com.innowise.authservice.exeption;
+package com.innowise.authservice.exception;
 
 public class RegistrationOrchestrationException extends RuntimeException {
     public RegistrationOrchestrationException(String message) {

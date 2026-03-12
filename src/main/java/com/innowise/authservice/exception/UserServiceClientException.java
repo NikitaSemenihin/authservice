@@ -1,4 +1,4 @@
-package com.innowise.authservice.exeption;
+package com.innowise.authservice.exception;
 
 public class UserServiceClientException extends RuntimeException {
     public UserServiceClientException(String message) {

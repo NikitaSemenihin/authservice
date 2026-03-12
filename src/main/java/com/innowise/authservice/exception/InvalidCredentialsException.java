@@ -1,4 +1,4 @@
-package com.innowise.authservice.exeption;
+package com.innowise.authservice.exception;
 
 public class InvalidCredentialsException extends RuntimeException {
     public InvalidCredentialsException() {
