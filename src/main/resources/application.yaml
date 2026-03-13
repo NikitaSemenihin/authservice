@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+userservice:
+  base-url: ${USER_SERVICE_URL:http://localhost:8082}
+  connect-timeout-ms: ${USER_SERVICE_CONNECT_TIMEOUT_MS:2000}
+  read-timeout-ms: ${USER_SERVICE_READ_TIMEOUT_MS:3000}
+
+spring:
+  application:
+    name: authservice
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  jwt:
+    secret: ${JWT_SECRET}
