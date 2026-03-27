@@ -30,7 +30,9 @@ public class SecurityConfig {
                                 "/api/auth/register",
                                 "/api/auth/login",
                                 "/api/auth/validate",
-                                "/api/auth/refresh"
+                                "/api/auth/refresh",
+                                "/actuator/health",
+                                "/actuator/health/**"
                         )
                         .permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/auth/*")
